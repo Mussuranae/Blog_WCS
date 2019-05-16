@@ -1,13 +1,11 @@
-{# templates/blog/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}All articles{% endblock %}
-
 {% block body %}
-    <h1>All articles from article s table : </h1>
-    {% for article in articles %}
+
+    <h1>All articles from the category {{ category.name }} : </h1>
+    {% for article in article %}
         <div>
-            <h2>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
+            <h2>{{ article.title }}</h2>
             <p>{{ article.content }}</p>
         </div>
     {% else %}
@@ -16,6 +14,5 @@
     <a href="{{ path('app_index') }}">
         Back to homepage.
     </a>
-
 
 {% endblock %}
