@@ -5,7 +5,7 @@
     <h1>All articles from the category {{ category.name }} : </h1>
     {% for article in article %}
         <div>
-            <h2>{{ article.title }}</h2>
+            <h2>{{ article.id }} - {{ article.title }}</h2>
             <p>{{ article.content }}</p>
         </div>
     {% else %}
