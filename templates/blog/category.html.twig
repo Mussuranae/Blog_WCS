@@ -3,7 +3,7 @@
 {% block body %}
 
     <h1>All articles from the category {{ category.name }} : </h1>
-    {% for article in article %}
+    {% for article in articles %}
         <div>
             <h2>{{ article.id }} - {{ article.title }}</h2>
             <p>{{ article.content }}</p>

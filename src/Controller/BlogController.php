@@ -88,12 +88,14 @@ class BlogController extends AbstractController
             ->getRepository(Category::class)
             ->findOneBy(['name' => $categoryName]);
 
-        $article = $this->getDoctrine()
+        $articles = $category->getArticles();
+
+        /*$articles = $this->getDoctrine()
             ->getRepository(Article::class)
-            ->findBy(['category' => $category], ['id' => 'desc'], 3);
+            ->findBy(['category' => $category], ['id' => 'desc'], 3);*/
 
 
-        return $this->render('blog/category.html.twig', ['article' => $article, 'category' => $category]);
+        return $this->render('blog/category.html.twig', ['articles' => $articles, 'category' => $category]);
     }
 
 }
