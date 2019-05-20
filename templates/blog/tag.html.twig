@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1>Tag : {{ tag.name }}</h1>
+
+    <ul>
+        {% for article in articles %}
+            <li><a href="{{ path('blog_show', {'slug': article.title}) }}">{{ article.title }}</a></li>
+        {% else %}
+            <li>No tags for this article</li>
+        {% endfor %}
+    </ul>
+
+
+    <a href="{{ path('app_index') }}">
+        Back to homepage.
+    </a>
+{% endblock %}

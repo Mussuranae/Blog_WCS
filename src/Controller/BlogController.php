@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Tag;
 
 class BlogController extends AbstractController
 {
@@ -40,7 +41,7 @@ class BlogController extends AbstractController
      *
      * @param string $slug The slugger
      *
-     * @Route("/{slug<^[a-z0-9-]+$>}",
+     * @Route("/{slug}",
      *     defaults={"slug" = null},
      *     name="blog_show")
      *  @return Response A response instance
@@ -87,6 +88,16 @@ class BlogController extends AbstractController
         $articles = $category->getArticles();
 
         return $this->render('blog/category.html.twig', ['articles' => $articles, 'category' => $category]);
+    }
+
+    /**
+     * @Route("/tag/{name}", name="show_tag")
+     * @return Response
+     */
+    public function showListTags(Tag $tag) : Response
+    {
+        $articles = $tag->getArticles();
+        return $this->render('blog/tag.html.twig', ['articles' => $articles, 'tag' => $tag]);
     }
 
 }
