@@ -78,22 +78,13 @@ class BlogController extends AbstractController
 
     /**
      *
-     * @Route("/category/{categoryName}", name="show_category")
-     *  @return Response A response instance
+     * @Route("/category/{name}", name="show_category")
+     * @return Response A response instance
      */
 
-    public function showByCategory(string $categoryName) : Response
+    public function showByCategory(Category $category) : Response
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(['name' => $categoryName]);
-
         $articles = $category->getArticles();
-
-        /*$articles = $this->getDoctrine()
-            ->getRepository(Article::class)
-            ->findBy(['category' => $category], ['id' => 'desc'], 3);*/
-
 
         return $this->render('blog/category.html.twig', ['articles' => $articles, 'category' => $category]);
     }
