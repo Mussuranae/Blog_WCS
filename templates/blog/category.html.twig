@@ -2,6 +2,11 @@
 
 {% block body %}
 
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
     <h1>All articles from the category {{ category.name }} : </h1>
     {% for article in articles %}
         <div>
@@ -11,6 +16,9 @@
     {% else %}
         Aucun article trouvé.
     {% endfor %}
+
+    <a href="{{ path('all_category') }}">All Categories</a>
+    <br>
     <a href="{{ path('app_index') }}">
         Back to homepage.
     </a>

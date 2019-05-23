@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Form\ArticleSearchType;
+use App\Form\CategoryType;
+use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +14,8 @@ use App\Entity\Tag;
 
 class BlogController extends AbstractController
 {
+
+
     /**
      * Show all row from article's entity
      *
@@ -30,18 +35,23 @@ class BlogController extends AbstractController
             );
         }
 
+        $form = $this->createForm(ArticleSearchType::class, null, ['method' => \Symfony\Component\HttpFoundation\Request::METHOD_GET]);
+
         return $this->render(
             'blog/index.html.twig',
-            ['articles' => $articles]
+            ['articles' => $articles, 'form' => $form->createView()]
         );
     }
+
+
+
 
     /**
      * Getting a article with a formatted slug for title
      *
      * @param string $slug The slugger
      *
-     * @Route("/{slug}",
+     * @Route("/article/{slug}",
      *     defaults={"slug" = null},
      *     name="blog_show")
      *  @return Response A response instance
@@ -87,8 +97,13 @@ class BlogController extends AbstractController
     {
         $articles = $category->getArticles();
 
-        return $this->render('blog/category.html.twig', ['articles' => $articles, 'category' => $category]);
+
+        $category = new Category();
+        $formCat = $this->createForm(CategoryType::class, $category);
+
+        return $this->render('blog/category.html.twig', ['articles' => $articles, 'category' => $category, 'form' => $formCat->createView()]);
     }
+
 
     /**
      * @Route("/tag/{name}", name="show_tag")
