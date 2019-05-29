@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use Faker;
 use App\Entity\Article;
+use App\Service\Slugify;
 use App\DataFixtures\CategoryFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -22,6 +23,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article->setTitle(mb_strtolower($faker->word()));
             $article->setContent($faker->text($maxNbChars = 200));
             $article->setCategory($this->getReference('categorie_' . rand(0, 4)));
+            $article->setSlug();
             $manager->persist($article);
         }
 

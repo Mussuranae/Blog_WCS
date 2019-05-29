@@ -21,6 +21,10 @@
                 <td>{{ article.content }}</td>
             </tr>
             <tr>
+                <th>Slug</th>
+                <td>{{ article.slug }}</td>
+            </tr>
+            <tr>
                 <th>Tag</th>
                 {% for tag in article.tags %}
                     <td>{{ tag.name }},</td>
