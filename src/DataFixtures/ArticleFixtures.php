@@ -4,8 +4,6 @@ namespace App\DataFixtures;
 
 use Faker;
 use App\Entity\Article;
-use App\Service\Slugify;
-use App\DataFixtures\CategoryFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;

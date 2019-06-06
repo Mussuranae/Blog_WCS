@@ -26,3 +26,7 @@ db.php
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> symfony/swiftmailer ###
+config/packages/dev/swiftmailer.yaml
+###< symfony/swiftmailer ###

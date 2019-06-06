@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <table>
+            <thead>
+                <th>New article !</th>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>A new article has been add to your blog !</td>
+                </tr>
+                <tr>
+                    <td>Titre : {{ article.title }}</td>
+                </tr>
+                <tr>
+                    <td>Content : {{ article.content }}</td>
+                </tr>
+                <tr>
+                    <a href="http://127.0.0.1:8000/article/{{ article.id }}">Link to article</a>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
