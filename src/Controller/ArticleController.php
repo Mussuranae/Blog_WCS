@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\User;
 use App\Form\ArticleType;
 use App\Service\Slugify;
 use App\Repository\ArticleRepository;
@@ -36,6 +37,10 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $author = $this->getUser();
+            $article->setAuthor($author);
+
             $entityManager = $this->getDoctrine()->getManager();
 
             $slug = $slugify->generate($article->getTitle());
