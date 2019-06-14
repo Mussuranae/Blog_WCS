@@ -14,37 +14,32 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Article::class);
     }
 
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllWithCategories()
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('a')
+            ->innerJoin('a.category', 'c' )
+            ->addSelect('c')
+            ->getQuery();
 
-    /*
-    public function findOneBySomeField($value): ?Article
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $qb->execute();
     }
-    */
+
+    public function findAllWithCategoriesAndTags()
+    {
+        $queryBuilder = $this->createQueryBuilder('a')
+                        ->leftJoin('a.tags', 't')
+                        ->leftJoin('a.category', 'c')
+                        ->addSelect('t')
+                        ->addSelect('c')
+                        ->getQuery();
+
+        return $queryBuilder->execute();
+    }
+
 }

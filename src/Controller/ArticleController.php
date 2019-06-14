@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Entity\User;
 use App\Form\ArticleType;
 use App\Service\Slugify;
 use App\Repository\ArticleRepository;
@@ -22,8 +21,9 @@ class ArticleController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository): Response
     {
+        $article = $articleRepository->findAllWithCategoriesAndTags();
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $article,
         ]);
     }
 
