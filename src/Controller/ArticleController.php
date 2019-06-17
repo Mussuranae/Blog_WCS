@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Service\Slugify;
 use App\Repository\ArticleRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,14 +22,29 @@ class ArticleController extends AbstractController
      */
     public function index(ArticleRepository $articleRepository): Response
     {
-        $article = $articleRepository->findAllWithCategoriesAndTags();
-        return $this->render('article/index.html.twig', [
-            'articles' => $article,
-        ]);
+        $user = $this->getUser();
+        if (!$user)
+        {
+            $article = $articleRepository->findAllWithCategoriesAndTags();
+            return $this->render('article/index.html.twig', [
+                'articles' => $article
+            ]);
+        }
+        else
+        {
+            $userMail = $user->getEmail();
+            $article = $articleRepository->findAllWithCategoriesAndTags();
+            return $this->render('article/index.html.twig', [
+                'articles' => $article, 'user' => $userMail
+            ]);
+        }
+
+
     }
 
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_AUTHOR")
      */
     public function new(Request $request, Slugify $slugify, \Swift_Mailer $mailer): Response
     {
@@ -76,6 +92,7 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_AUTHOR")
      */
     public function edit(Request $request, Article $article, Slugify $slugify): Response
     {
@@ -100,6 +117,7 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/{id}", name="article_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_AUTHOR")
      */
     public function delete(Request $request, Article $article): Response
     {

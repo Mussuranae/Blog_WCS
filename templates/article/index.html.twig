@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>Article index</h1>
-
+{% dump(app.user) %}
     <table class="table">
         <thead>
             <tr>
@@ -31,7 +31,12 @@
 
                 <td>
                     <a href="{{ path('article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+
+                    {% if app.user %}
+                        {% if ((article.author.email == user) or is_granted('ROLE_ADMIN')) %}
+                        <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
+                        {% endif %}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

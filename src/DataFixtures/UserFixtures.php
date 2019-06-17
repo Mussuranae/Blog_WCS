@@ -28,6 +28,20 @@ class UserFixtures extends Fixture
         ));
 
         $manager->persist($author);
+        $this->addReference("author1", $author);
+
+        // Création d’un utilisateur de type “auteur” 2
+        $authorbis = new User();
+        $authorbis->setEmail('authorbis@monsite.com');
+        $authorbis->setRoles(['ROLE_AUTHOR']);
+        $authorbis->setPassword($this->passwordEncoder->encodePassword(
+            $authorbis,
+            'authorbispassword'
+        ));
+
+        $manager->persist($authorbis);
+        $this->addReference("author2", $authorbis);
+
 
         // Création d’un utilisateur de type “administrateur”
         $admin = new User();

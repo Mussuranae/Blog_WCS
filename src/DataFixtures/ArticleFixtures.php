@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use Faker;
 use App\Entity\Article;
 use App\Entity\Category;
@@ -41,11 +42,16 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $tag->setName("tag " . $i);
             $manager->persist($tag);
 
+            $author = new User();
+            $role_author[] = $this->getReference("author1");
+            $role_author[] = $this->getReference("author2");
+
             $article = new Article();
             $article->setTitle("article " . $i);
             $article->setSlug($this->slugify->generate($article->getTitle()));
             $article->setContent("article " . $i . " content");
             $article->setCategory($category);
+            $article->setAuthor($role_author[rand(0, 1)]);
             $article->addTag($tag);
             $manager->persist($article);
         }
@@ -61,6 +67,6 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies()
     {
-        return [CategoryFixtures::class];
+        return [CategoryFixtures::class, UserFixtures::class];
     }
 }

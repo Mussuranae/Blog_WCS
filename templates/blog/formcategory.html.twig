@@ -14,12 +14,13 @@
             </ul>
         </div>
 
-
-    <h1>Add a category</h1>
-    {{ form_start(form) }}
-        {{ form_row(form.name) }}
-        <button class="btn">{{ button_label|default('Submit') }}</button>
-    {{ form_end(form) }}
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1>Add a category</h1>
+        {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            <button class="btn">{{ button_label|default('Submit') }}</button>
+        {{ form_end(form) }}
+    {% endif %}
 
     <a href="{{ path('app_index') }}">
         Back to homepage.

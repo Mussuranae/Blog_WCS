@@ -33,6 +33,9 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_AUTHOR') %}
+        <a href="{{ path('article_edit', { 'id': article.id} ) }}">Éditer</a>
+    {%endif%}
     <a href="{{ path('article_index') }}">back to list</a>
 
     <a href="{{ path('article_edit', {'id': article.id}) }}">edit</a>
