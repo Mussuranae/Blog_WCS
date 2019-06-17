@@ -2,17 +2,25 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/blog/default", name="app_index")
+     * @Route("/", name="app_index")
      */
 
-    public function index()
+    public function index(SessionInterface $session) : Response
     {
+        if (!$session->has('total'))
+        {
+            $session->set('total', 0); // if total doesn’t exist in session, it is initialized.
+        }
+
+        $total = $session->get('total'); // get actual value in session with ‘total' key.
         return $this->render('blog/default.html.twig');
     }
 }

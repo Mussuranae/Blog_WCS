@@ -13,8 +13,11 @@
             {{ include('navbar.html.twig') }}
         </header>
 
-        {% block body %}{% endblock %}
+        {% block messageFlash %}
+            {% include 'alert.html.twig' %}
+        {% endblock %}
 
+        {% block body %}{% endblock %}
 
         <script src="build/js/app.js"></script>
         {% block javascripts %}

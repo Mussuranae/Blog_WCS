@@ -65,10 +65,10 @@ class ArticleController extends AbstractController
             $entityManager->persist($article);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Article créé');
+
             $message = (new \Swift_Message('Nouvel article publié'))
-
                 ->setBody($this->renderView('mail/notification.html.twig', ['article' => $article]), 'text/html');
-
             $mailer->send($message);
 
             return $this->redirectToRoute('article_index');
@@ -103,6 +103,8 @@ class ArticleController extends AbstractController
             $article->setSlug();
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Article modifié');
+
 
             return $this->redirectToRoute('article_index', [
                 'id' => $article->getId(),
@@ -125,6 +127,9 @@ class ArticleController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);
             $entityManager->flush();
+
+            $this->addFlash('danger', 'Article supprimé');
+
         }
 
         return $this->redirectToRoute('article_index');

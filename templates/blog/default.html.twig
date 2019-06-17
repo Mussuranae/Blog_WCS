@@ -8,4 +8,6 @@
     <p>You can se all the category <a href="{{ path('all_category') }}">here</a></p>
 
     <p>And <a href="{{ path('article_index') }}">here</a>, you can see a list of articles !</p>
+
+    {{ app.session.get('total') }}
 {% endblock %}
